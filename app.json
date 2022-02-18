@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "chopping-block",
+    "slug": "chopping-block",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "chopping-block"
+}
