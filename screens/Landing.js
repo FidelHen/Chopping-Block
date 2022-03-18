@@ -25,9 +25,6 @@ const Landing = ({ navigation }) => {
         </View>
         <View style={styles.image_container}>
           <TacoSVG />
-          <TouchableOpacity onPress={() => navigation.navigate('Landing2')}>
-            <AntDesign name='right' size={24} color="#00000017" />
-          </TouchableOpacity>
         </View>
         <View style={styles.image_text}>
           <Text style={{ fontSize: 27, fontWeight: "bold", letterSpacing: 0, opacity: 1 }}>
@@ -43,12 +40,12 @@ const Landing = ({ navigation }) => {
           <View style={{ height: "16%", width: "20%", borderRadius: "100000%", backgroundColor: "#00000026" }} />
         </View>
         <View style={styles.buttons}>
-          <Button type="primary" style={{ flex: 0.35, backgroundColor: "#4053FA" }}>
+          <Button type="primary" style={{ flex: 0.35, backgroundColor: "#4053FA" }} onPress={() => navigation.navigate('SignUp')}>
             <Text style={{ fontSize: 18, fontWeight: "600" }}>
               Sign up
             </Text>
           </Button>
-          <Button style={{ flex: 0.35, borderWidth: 2, borderColor: "#4053FA" }}>
+          <Button style={{ flex: 0.35, borderWidth: 2, borderColor: "#4053FA" }} onPress={() => navigation.navigate('SignIn')}>
             <Text style={{ fontSize: 18, fontWeight: "600", color: "#4053FA" }}>
               Sign in
             </Text>
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 0.3,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     padding: "5%",
   },
   image_text: {
