@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Button } from '@ant-design/react-native';
 
-const SignIn = () => {
+const LogIn = () => {
 
   const [email, onChangeEmail] = React.useState();
   const [password, onChangePassword] = React.useState();
@@ -16,7 +16,7 @@ const SignIn = () => {
         <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
           <View style={{flex: 0.1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center'}}>
             <Text style={{fontSize: 24}}>
-              SignIn Screen
+              Log in Screen
             </Text>
           </View>
           <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder="Email"/>
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SignIn
+export default LogIn

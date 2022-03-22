@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TacoSVG from '../../assets/svgs/tacoSVG';
+import TacoSVG from '../../../assets/svgs/tacoSVG';
 import { Button } from '@ant-design/react-native';
 
 const Landing = ({ navigation }) => {
@@ -42,7 +42,7 @@ const Landing = ({ navigation }) => {
           </Button>
           <Button style={{ flex: 0.35, borderWidth: 2, borderColor: "#4053FA" }} onPress={() => navigation.navigate('SignIn')}>
             <Text style={{ fontSize: 18, fontWeight: "600", color: "#4053FA" }}>
-              Sign in
+              Log in
             </Text>
           </Button>
         </View>
