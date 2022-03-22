@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TacoSVG from '../../../svgs/tacoSVG';
+import TacoSVG from '../../assets/svgs/tacoSVG';
 import { Button } from '@ant-design/react-native';
 
 const Landing = ({ navigation }) => {
