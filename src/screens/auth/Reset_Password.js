@@ -1,11 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, Platform, 
+import { StyleSheet, Text, View, KeyboardAvoidingView, Platform, 
   TouchableWithoutFeedback, Keyboard, TextInput} from 'react-native';
 import { Button } from '@ant-design/react-native';
-  
-  
-const entireScreenWidth = Dimensions.get('window').width;
-const entireScreenHeight = Dimensions.get('window').height;
 
 const Reset_Password = () => {
     return (

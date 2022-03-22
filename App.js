@@ -1,12 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Landing from './screens/Landing';
-import SignUp from './screens/SignUp';
-import SignIn from './screens/SignIn';
+import Landing from './src/screens/auth/Landing';
+import SignUp from './src/screens/auth/SignUp';
+import SignIn from './src/screens/auth/SignIn';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,10 +18,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
