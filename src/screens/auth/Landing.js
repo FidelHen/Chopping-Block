@@ -1,14 +1,9 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Dimensions, SafeAreaView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TacoSVG from '../svgs/tacoSVG';
-import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import TacoSVG from '../../../svgs/tacoSVG';
 import { Button } from '@ant-design/react-native';
-
-const entireScreenWidth = Dimensions.get('window').width;
-const entireScreenHeight = Dimensions.get('window').height;
 
 const Landing = ({ navigation }) => {
   return (
