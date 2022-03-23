@@ -17,7 +17,7 @@ const Reset_Password = () => {
        >
          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
            <View style={styles.inner}>
-             <TextInput placeholder="Email" style={styles.textInput} />
+             <TextInput placeholder="New Password" style={styles.textInput} secureTextEntry={true} />
            </View>
          </TouchableWithoutFeedback>
        </KeyboardAvoidingView>
@@ -41,27 +41,6 @@ const styles = StyleSheet.create({
       left: "10%",
       marginTop: "10%",
     },
-    image_container: {
-      flex: 0.3,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "flex-end",
-      padding: 20,
-    },
-    image_text: {
-      flex: 0.2,
-      flexDirection: "column",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-    },
-    small_circles: {
-      flex: 0.1,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginLeft: "44%",
-      marginRight: "44%",
-    },
     buttons: {
       flex: 0.2,
       flexDirection: "row",
@@ -74,10 +53,6 @@ const styles = StyleSheet.create({
     inner: {
       padding: 24,
       flex: 1
-    },
-    header: {
-      fontSize: 36,
-      marginBottom: 48
     },
     textInput: {
       height: 40,
