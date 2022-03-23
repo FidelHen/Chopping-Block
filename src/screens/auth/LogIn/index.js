@@ -1,47 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from '@ant-design/react-native';
+import { auth } from '../../../firebase/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const LogIn = () => {
+const Login = ({ navigation }) => {
 
-  const [email, onChangeEmail] = React.useState();
-  const [password, onChangePassword] = React.useState();
+  const [email, onChangeEmail] = useState();
+  const [password, onChangePassword] = useState();
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  function signInUser(email, password) {
+    signInWithEmailAndPassword(auth, email, password).then(userCredentials => {
+      console.log(userCredentials);
+      setIsSignedIn(true);
+    }).catch(error => {
+      alert("Sign In Errors");
+      alert(error.messages);
+    })
+
+    if (isSignedIn) {
+      navigation.navigate('Main');
+    }
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <SafeAreaProvider>
         <StatusBar />
-        <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
-          <View style={{flex: 0.1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center'}}>
-            <Text style={{fontSize: 24}}>
-              Log in Screen
+        <View style={{ flex: 0.8, alignContent: 'center', justifyContent: 'flex-end' }}>
+          <View style={{ flex: 0.2, flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontSize: 24 }}>
+              Login Screen
             </Text>
           </View>
-          <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder="Email"/>
+          <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder="Email" />
           <TextInput style={styles.input} onChangeText={onChangePassword} value={password} placeholder="Password" secureTextEntry={true} />
-          <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA"}} onPress={() => talkToFireBase(email, password)}>
+        </View>
+        <View style={{ flex: 0.1, justifyContent: 'center' }}>
+          <TouchableOpacity style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }} onPress={() => navigation.navigate("ResetPassword")}>
+            <Text style={{ fontSize: 16, color: 'blue' }}>
+              Forgot Password
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 0.6, alignContent: 'center' }}>
+          <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => signInUser(email, password)}>
             <Text style={{ fontSize: 18, fontWeight: "600" }}>
-              Sign up
+              Sign In
             </Text>
           </Button>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Text>
+              Note: Might have to press sign in twice for it to work.
+            </Text>
+          </View>
         </View>
       </SafeAreaProvider>
-    </SafeAreaView >
+    </KeyboardAvoidingView >
   )
-}
-
-function talkToFireBase(e, p) {
-  console.log(e);
-  console.log(p);
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     backgroundColor: "#fff"
   },
   input: {
@@ -52,4 +79,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LogIn
+export default Login

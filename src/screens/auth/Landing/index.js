@@ -40,7 +40,7 @@ const Landing = ({ navigation }) => {
               Sign up
             </Text>
           </Button>
-          <Button style={{ flex: 0.35, borderWidth: 2, borderColor: "#4053FA" }} onPress={() => navigation.navigate('LogIn')}>
+          <Button style={{ flex: 0.35, borderWidth: 2, borderColor: "#4053FA" }} onPress={() => navigation.navigate('Login')}>
             <Text style={{ fontSize: 18, fontWeight: "600", color: "#4053FA" }}>
               Log in
             </Text>
