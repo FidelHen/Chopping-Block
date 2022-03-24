@@ -11,17 +11,26 @@
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
     "@ant-design/react-native": "^4.2.0",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.0",
     "expo": "~44.0.2",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
+    "firebase": "^9.6.9",
     "package.json": "^2.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
     "react-native-elements": "^3.4.2",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-pager-view": "^5.4.15",
     "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.10.1",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^12.1.1",
-    "react-native-web": "0.17.1"
+    "react-native-svg-transformer": "^1.0.0",
+    "react-native-web": "0.17.1",
+    "react-native-maps": "0.29.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
