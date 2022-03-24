@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -11,20 +11,23 @@ const Login = ({ navigation }) => {
 
   const [email, onChangeEmail] = useState();
   const [password, onChangePassword] = useState();
-  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.navigate("Home")
+      }
+    })
+
+    return unsubscribe
+  }, [])
 
   function signInUser(email, password) {
     signInWithEmailAndPassword(auth, email, password).then(userCredentials => {
-      console.log(userCredentials);
-      setIsSignedIn(true);
+      console.log(userCredentials.user);
     }).catch(error => {
-      alert("Sign In Errors");
       alert(error.messages);
     })
-
-    if (isSignedIn) {
-      navigation.navigate('Main');
-    }
   }
 
   return (
@@ -53,11 +56,6 @@ const Login = ({ navigation }) => {
               Sign In
             </Text>
           </Button>
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Text>
-              Note: Might have to press sign in twice for it to work.
-            </Text>
-          </View>
         </View>
       </SafeAreaProvider>
     </KeyboardAvoidingView >
