@@ -1,23 +1,25 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput
 } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Button } from '@ant-design/react-native';
+import { auth } from '../../../firebase/firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
-const ResetPassword = () => {
+const ResetPassword = ({ navigation }) => {
 
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [email, setEmail] = useState();
 
-  function talkToFirebase(p, cp) {
-    if (p == cp) {
-      console.log(p);
-    }
-    else {
-      alert("Passwords do not match!")
-    }
+  function sendResetEmail(e) {
+    sendPasswordResetEmail(auth, e).then(function() {
+      alert("Password Reset Email was sent")
+      navigation.navigate("Landing")
+    })
+    .catch(function(error) {
+      alert("Error! Password Reset Email was not sent")
+    });
   }
 
   return (
@@ -30,13 +32,17 @@ const ResetPassword = () => {
               Reset Password
             </Text>
           </View>
-          <TextInput style={styles.input} onChangeText={setPassword} value={password} placeholder="New Password" secureTextEntry={true} />
-          <TextInput style={styles.input} onChangeText={setConfirmPassword} value={confirmPassword} placeholder="Confirm Password" secureTextEntry={true} />
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Text style={{fontSize: 20}}>
+              Please enter email for password reset
+            </Text>
+          </View>
+          <TextInput style={styles.input} onChangeText={setEmail} value={email} placeholder="Email" />
         </View>
         <View style={{ flex: 0.6, alignContent: 'center' }}>
-          <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => talkToFirebase(password, confirmPassword)}>
+          <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => sendResetEmail(email)}>
             <Text style={{ fontSize: 18, fontWeight: "600" }}>
-              Reset
+              Send Email
             </Text>
           </Button>
         </View>
