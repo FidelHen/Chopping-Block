@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Dimensions, View } from 'react-native';
-import {mapStyleLight} from './mapStyle';
+import { mapStyleDark } from './mapStyle';
 import * as Location from 'expo-location';
 
 const Home = () => {
@@ -24,11 +24,11 @@ const Home = () => {
 
   return (
       <View>
-        <StatusBar/>
+        <StatusBar style='light'/>
         <MapView
         provider={PROVIDER_GOOGLE} 
         style={styles.map}
-        customMapStyle={mapStyleLight}
+        customMapStyle={mapStyleDark}
         region={{
           latitude: 35.2270869,
           longitude: -80.8431267,
