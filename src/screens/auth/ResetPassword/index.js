@@ -1,13 +1,12 @@
 import {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
-  StyleSheet, Text, View, KeyboardAvoidingView, Platform,
-  TouchableWithoutFeedback, Keyboard, TextInput
+  StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput
 } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Button } from '@ant-design/react-native';
 
-const Reset_Password = () => {
+const ResetPassword = () => {
 
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
@@ -62,4 +61,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Reset_Password
+export default ResetPassword

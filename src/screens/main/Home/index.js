@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
-const Main = () => {
+const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Main;
+export default Home;
