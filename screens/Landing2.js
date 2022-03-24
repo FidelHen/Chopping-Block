@@ -20,7 +20,7 @@ const Landing2 = () => {
         </Text>
       </View>
       <View style={styles.image_container}>
-        <TouchableOpacity>
+        <TouchableOpacity style={{ backgroundColor: "red" }}>
           <AntDesign name='left' size={24} color="#00000017" />
         </TouchableOpacity>
         <SushiSVG />
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     flex: 0.3,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-end",
-    padding: 20,
+    justifyContent: "flex-start",
+    //backgroundColor: "red"
   },
   image_text: {
     flex: 0.2,

@@ -9,7 +9,7 @@ import { Button } from '@ant-design/react-native';
 const entireScreenWidth = Dimensions.get('window').width;
 const entireScreenHeight = Dimensions.get('window').height;
 
-const Landing3 = () => {
+const Cravings = () => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -40,6 +40,9 @@ const Landing3 = () => {
 
         </View>
 
+
+      
+      
      
       <View style={styles.buttons}>
         <Button type="primary" style={{ flex: 0.75, backgroundColor: "#4053FA" }}>
@@ -64,7 +67,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-evenly",
     padding: "5%",
-    //borderBottomWidth: 2
   },
   tester: {
     flex: 1,
@@ -106,7 +108,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   }
  
+  
+ 
+ 
  
 });
 
-export default Landing3
+export default Cravings
