@@ -1,73 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Dimensions, View } from 'react-native';
-import { mapStyleDark } from './mapStyle';
-import * as Location from 'expo-location';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { Button } from '@ant-design/react-native';
+import { auth } from '../../../firebase/firebase'; 
 
-const Home = () => {
-  const [location, setLocation] = useState(null);
+const Home = ( {navigation} ) => {
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Location permission not granted');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      console.log(JSON.stringify(location));
-      setLocation(location);
-    })();
-  }, [])
+  function signOutUser() {
+    auth.signOut().then(() => {
+      navigation.navigate("Landing")
+    })
+    .catch(error => {
+      alert(error.message)
+    })
+  }
 
   return (
-      <View>
-        <StatusBar style='light'/>
-        <MapView
-        provider={PROVIDER_GOOGLE} 
-        style={styles.map}
-        customMapStyle={mapStyleDark}
-        region={{
-          latitude: 35.2270869,
-          longitude: -80.8431267,
-          latitudeDelta: 0.8,
-          longitudeDelta: 0.0121,
-        }}
-      >
-        <Marker
-            coordinate={location ? location.coords : {}}
-        >
-          <View style={styles.userLocationMarker}>
-          </View>
-        </Marker>
-      </MapView>
+    <SafeAreaView style={styles.container}>
+      <StatusBar />
+      <View style={{ flexDirection: "column", alignItems: 'center', justifyContent: "center" }}>
+        <Text>
+          Main Screen Signed in with {auth.currentUser?.email}
+        </Text>
+        <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => signOutUser()}>
+          <Text style={{ fontSize: 18, fontWeight: "600" }}>
+            Sign Out
+          </Text>
+        </Button>
+        <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => navigation.navigate("Settings")}>
+          <Text style={{ fontSize: 18, fontWeight: "600" }}>
+            Settings
+          </Text>
+        </Button>
       </View>
+    </SafeAreaView>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
     backgroundColor: "#fff"
   },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  userLocationMarker: {
-    width: 20,
-    height: 20,
-    borderRadius: 20,
-    borderWidth: 3,
-    borderColor: 'white',
-    backgroundColor: '#4053FA',
-    
-  }
 });
 
 export default Home;

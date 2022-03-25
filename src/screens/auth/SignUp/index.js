@@ -17,7 +17,7 @@ const SignUp = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, email, password).then(userCredentials => {
       console.log(userCredentials);
       alert("Sign Up Successful");
-      navigation.navigate('Main');
+      navigation.navigate('Cravings');
     }).catch(error => {
       alert("Sign Up Error");
       alert(error.messages);
