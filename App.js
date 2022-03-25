@@ -7,6 +7,7 @@ import Login from './src/screens/auth/Login';
 import ResetPassword from './src/screens/auth/ResetPassword';
 import Cravings from './src/screens/main/Cravings';
 import Home from './src/screens/main/Home';
+import Settings from './src/screens/main/Settings';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="Cravings" component={Cravings} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );
