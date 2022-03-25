@@ -54,8 +54,8 @@ const Home = ({ navigation }) => {
           longitudeDelta: 0.0121,
         }}
       >
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={{ flex: 1 }}>
+        <SafeAreaView>
+          <View >
             <TouchableOpacity style={styles.profileButton} onPress={() => handleSignOut()}>
               <SvgUri uri='https://avatars.dicebear.com/api/bottts/:choppingblock.svg' width="80%" height="80%" />
             </TouchableOpacity>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    top: "5%",
+    top: "15%",
     right: "5%",
     position: 'absolute',
     backgroundColor: 'white',
