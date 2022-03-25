@@ -1,39 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { StyleSheet, Dimensions, View, TouchableOpacity } from 'react-native';
+import {SvgUri} from 'react-native-svg';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import { Button } from '@ant-design/react-native';
+import { mapStyleDark } from './mapStyle';
+import * as Location from 'expo-location';
+import BottomSheet from '@gorhom/bottom-sheet';
+import RestaurantBottomSheet from '../../../components/RestaurantBottomSheet';
+import PrimaryMapButton from '../../../components/PrimaryMapButton';
+import fakeRestaurantData from '../../../utils/fakeRestuarantData';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { auth } from '../../../firebase/firebase'; 
 
-const Home = ( {navigation} ) => {
+const Home = ({navigation}) => {
+  const bottomSheetRef = useRef(null);
+  const [location, setLocation] = useState(null);
+  const snapPoints = useMemo(() => ['25%', '65%'], []);
 
-  function signOutUser() {
+  const handleSignOut = () => {
     auth.signOut().then(() => {
       navigation.navigate("Landing")
     })
     .catch(error => {
       alert(error.message)
-    })
+    });
   }
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Location permission not granted');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(JSON.stringify(location));
+      setLocation(location);
+    })();
+  }, [])
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar />
-      <View style={{ flexDirection: "column", alignItems: 'center', justifyContent: "center" }}>
-        <Text>
-          Main Screen Signed in with {auth.currentUser?.email}
-        </Text>
-        <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => signOutUser()}>
-          <Text style={{ fontSize: 18, fontWeight: "600" }}>
-            Sign Out
-          </Text>
-        </Button>
-        <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => navigation.navigate("Settings")}>
-          <Text style={{ fontSize: 18, fontWeight: "600" }}>
-            Settings
-          </Text>
-        </Button>
+      <View>
+        <StatusBar style='light'/>
+        <MapView
+          provider={PROVIDER_GOOGLE} 
+          style={styles.map}
+          customMapStyle={mapStyleDark}
+          region={{
+            latitude: 35.2270869,
+            longitude: -80.8431267,
+            latitudeDelta: 0.8,
+            longitudeDelta: 0.0121,
+          }}
+        >
+          <SafeAreaView style={{flex: 1}}>
+            <View style={{ flex:1 }}>
+                <TouchableOpacity style={styles.profileButton} onPress={() => handleSignOut()}>
+                  <SvgUri uri='https://avatars.dicebear.com/api/bottts/:choppingblock.svg'  width="80%" height="80%" />
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
+          {fakeRestaurantData.map((restaurant, index) => {
+            return (
+              <Marker 
+                key={index}
+                coordinate={{latitude: restaurant.latitude, longitude: restaurant.longitude}}
+                title={restaurant.name}
+              />
+            );
+          })}
+          <Marker
+            coordinate={location ? location.coords : {}}
+          >
+            <View style={styles.userLocationMarker} />
+          </Marker>
+        </MapView>
+
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={1}
+          snapPoints={snapPoints}
+        >
+            <PrimaryMapButton />
+            <RestaurantBottomSheet restaurants={fakeRestaurantData}/>
+        </BottomSheet>
       </View>
-    </SafeAreaView>
   )
 };
 
@@ -45,6 +97,34 @@ const styles = StyleSheet.create({
     alignContent: "center",
     backgroundColor: "#fff"
   },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+  userLocationMarker: {
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: 'white',
+    backgroundColor: '#4053FA',
+  },
+  mapOverlayComponents: {
+    position: 'absolute',
+    bottom: 0,
+    display: 'flex',
+  },
+  profileButton: {
+    height: 40,
+    width: 40, 
+    borderRadius: 20, 
+    top: 10, 
+    right: 15, 
+    position: 'absolute', 
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
 
 export default Home;
