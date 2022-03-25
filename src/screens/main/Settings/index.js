@@ -1,13 +1,10 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Dimensions, SafeAreaView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, SafeAreaView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import ProfilePic from '../svgs/profilePic';
+import ProfilePic from '../../../assets/svgs/profilePicSVG';
 
-const entireScreenWidth = Dimensions.get('window').width;
-const entireScreenHeight = Dimensions.get('window').height;
-
-const Landing = ({ navigation }) => {
+const Settings = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaProvider>
@@ -114,4 +111,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Landing
+export default Settings
