@@ -27,6 +27,11 @@ const Home = ( {navigation} ) => {
             Sign Out
           </Text>
         </Button>
+        <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => navigation.navigate("Settings")}>
+          <Text style={{ fontSize: 18, fontWeight: "600" }}>
+            Settings
+          </Text>
+        </Button>
       </View>
     </SafeAreaView>
   )
