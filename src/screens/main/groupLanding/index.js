@@ -5,7 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import GroupLanding from '../../../assets/svgs/GroupLandingSVG';
 import { Button } from '@ant-design/react-native';
 
-const Groups = () => {
+const Groups = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <SafeAreaProvider>
@@ -28,7 +28,7 @@ const Groups = () => {
                 </View>
 
                 <View>
-                    <Button type="primary" style={{ height: 45, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }}>
+                    <Button type="primary" style={{ height: 45, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => navigation.navigate('groupInvite')}>
                         <Text style={{ fontSize: 18, fontWeight: "600" }}>
                             Create Group
                         </Text>
