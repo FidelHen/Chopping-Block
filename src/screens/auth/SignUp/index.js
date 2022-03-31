@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from '@ant-design/react-native';
 import { auth } from '../../../firebase/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const SignUp = ({ navigation }) => {
 
@@ -15,10 +15,16 @@ const SignUp = ({ navigation }) => {
   const [password, onChangePassword] = useState();
 
   function signUpUser(fullName, email, password) {
-    createUserWithEmailAndPassword(auth, email, password).then(userCredentials => {
-      console.log(userCredentials);
-      alert("Sign Up Successful");
-      navigation.navigate('Cravings');
+    createUserWithEmailAndPassword(auth, email, password).then(() => {
+      updateProfile(auth.currentUser, {
+        displayName: fullName
+      }).then(userCredentials => {
+        alert("Sign Up Successful")
+        navigation.navigate('Cravings');
+      }).catch(error => {
+        alert("Setting displayName error");
+        alert(error.messages);
+      });
     }).catch(error => {
       alert("Sign Up Error");
       alert(error.messages);
