@@ -19,7 +19,7 @@ const Home = ({ navigation }) => {
 
   const handleSignOut = () => {
     auth.signOut().then(() => {
-      navigation.navigate("Landing")
+      navigation.navigate("Settings")
     })
       .catch(error => {
         alert(error.message)
@@ -55,7 +55,7 @@ const Home = ({ navigation }) => {
         }}
       >
         <SafeAreaView>
-          <View >
+          <View style={styles.profileButtonContainer}>
             <TouchableOpacity style={styles.profileButton} onPress={() => handleSignOut()}>
               <SvgUri uri='https://avatars.dicebear.com/api/bottts/:choppingblock.svg' width="80%" height="80%" />
             </TouchableOpacity>
@@ -120,12 +120,15 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    top: "15%",
-    right: "5%",
-    position: 'absolute',
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: '5%',
+    marginTop: '10%'
+  },
+  profileButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   }
 });
 
