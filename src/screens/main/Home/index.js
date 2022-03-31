@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { StyleSheet, Dimensions, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Dimensions, View, TouchableOpacity, Text } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { StatusBar } from 'expo-status-bar';
 import { mapStyleDark } from './mapStyle';
@@ -16,15 +16,6 @@ const Home = ({ navigation }) => {
   const bottomSheetRef = useRef(null);
   const [location, setLocation] = useState(null);
   const snapPoints = useMemo(() => ['25%', '65%'], []);
-
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      navigation.navigate("Landing")
-    })
-      .catch(error => {
-        alert(error.message)
-      });
-  }
 
   useEffect(() => {
     (async () => {
@@ -55,8 +46,8 @@ const Home = ({ navigation }) => {
         }}
       >
         <SafeAreaView>
-          <View >
-            <TouchableOpacity style={styles.profileButton} onPress={() => handleSignOut()}>
+          <View style={styles.profileButtonContainer}>
+            <TouchableOpacity style={styles.profileButton} onPress={() => navigation.navigate("Settings")}>
               <SvgUri uri='https://avatars.dicebear.com/api/bottts/:choppingblock.svg' width="80%" height="80%" />
             </TouchableOpacity>
           </View>
@@ -120,12 +111,15 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    top: "15%",
-    right: "5%",
-    position: 'absolute',
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: '5%',
+    marginTop: '10%'
+  },
+  profileButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   }
 });
 
