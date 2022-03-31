@@ -8,10 +8,15 @@ import { auth } from '../../../firebase/firebase';
 
 const Settings = ({ navigation }) => {
 
-  useEffect(() => {
-    console.log(auth)
-  }, [auth])
-  
+  const handleSignOut = () => {
+    auth.signOut().then(() => {
+      navigation.navigate("Landing")
+    })
+      .catch(error => {
+        alert(error.message)
+      });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaProvider>
@@ -35,12 +40,12 @@ const Settings = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.2 }}>
             <Text style={{ fontSize: 25, letterSpacing: 0, opacity: 1 }}>
-              {auth.currentUser?.displayName}
+              Name: {auth.currentUser?.displayName}
             </Text>
           </View>
           <View style={{ flex: 0.4 }}>
             <Text>
-              {auth.currentUser?.email}
+              Email: {auth.currentUser?.email}
             </Text>
           </View>
         </View>
@@ -71,7 +76,7 @@ const Settings = ({ navigation }) => {
               Reset Password
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
+          <TouchableOpacity onPress={() => handleSignOut}>
             <Text style={{ fontSize: 20, textAlign: "center", letterSpacing: 0, opacity: 1 }}>
               Log Out
             </Text>
