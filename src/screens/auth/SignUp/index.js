@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from '@ant-design/react-native';
 import { auth } from '../../../firebase/firebase';
@@ -29,19 +30,26 @@ const SignUp = ({ navigation }) => {
       <SafeAreaProvider>
         <StatusBar />
         <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
-          <View style={{ flex: 0.3, flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 24 }}>
-              Sign Up Screen
+          <View style={{ flex: 0.15, marginLeft: '5%' }}>
+            <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
+              <AntDesign name='left' size={28} color="#000000" />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 0.5, flexDirection: 'row', alignContent: 'center', justifyContent: 'flex-start', marginLeft: '7%' }}>
+            <Text style={{ fontSize: 39, fontWeight: 'bold' }}>
+              Create an account
             </Text>
           </View>
-          <TextInput style={styles.input} onChangeText={onChangeFullName} value={fullName} placeholder="Full Name" />
-          <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder="Email" />
-          <TextInput style={styles.input} onChangeText={onChangePassword} value={password} placeholder="Password" secureTextEntry={true} />
-          <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => signUpUser(fullName, email, password)}>
-            <Text style={{ fontSize: 18, fontWeight: "600" }}>
-              Sign Up
-            </Text>
-          </Button>
+          <View>
+            <TextInput style={styles.input} onChangeText={onChangeFullName} value={fullName} placeholder="Full Name" />
+            <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder="Email" />
+            <TextInput style={styles.input} onChangeText={onChangePassword} value={password} placeholder="Password" secureTextEntry={true} />
+            <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => signUpUser(fullName, email, password)}>
+              <Text style={{ fontSize: 18, fontWeight: "600" }}>
+                Sign Up
+              </Text>
+            </Button>
+          </View>
         </View>
       </SafeAreaProvider>
     </KeyboardAvoidingView >
