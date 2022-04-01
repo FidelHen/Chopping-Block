@@ -23,16 +23,11 @@ const Landing = ({ navigation }) => {
         </View>
         <View style={styles.image_text}>
           <Text style={{ fontSize: 27, fontWeight: "bold", letterSpacing: 0, opacity: 1 }}>
-            Loren Ipsum dolor sit
+            Welcome to Chopping Block!
           </Text>
           <Text style={{ fontSize: 20, paddingLeft: "12.5%", paddingRight: "12.5%", textAlign: "center", letterSpacing: 0, opacity: 1 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec felis placerat, vulputate nisi quis.
           </Text>
-        </View>
-        <View style={styles.small_circles}>
-          <View style={{ height: "16%", width: "20%", borderRadius: "100000%", backgroundColor: "#4053FA" }} />
-          <View style={{ height: "16%", width: "20%", borderRadius: "100000%", backgroundColor: "#00000026" }} />
-          <View style={{ height: "16%", width: "20%", borderRadius: "100000%", backgroundColor: "#00000026" }} />
         </View>
         <View style={styles.buttons}>
           <Button type="primary" style={{ flex: 0.35, backgroundColor: "#4053FA" }} onPress={() => navigation.navigate('SignUp')}>
@@ -78,18 +73,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-  small_circles: {
-    flex: 0.1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginLeft: "44%",
-    marginRight: "44%",
-  },
   buttons: {
     flex: 0.2,
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "space-evenly",
   }
 });
