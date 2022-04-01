@@ -76,7 +76,7 @@ const Settings = ({ navigation }) => {
               Reset Password
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleSignOut}>
+          <TouchableOpacity onPress={() => handleSignOut()}>
             <Text style={{ fontSize: 20, textAlign: "center", letterSpacing: 0, opacity: 1 }}>
               Log Out
             </Text>
