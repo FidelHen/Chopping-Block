@@ -73,7 +73,7 @@ const Home = ({ navigation }) => {
         index={1}
         snapPoints={snapPoints}
       >
-        <TouchableOpacity onPress={() => {navigation.navigate('groupLanding')}}>
+        <TouchableOpacity onPress={() => {navigation.navigate('GroupLanding')}}>
           <PrimaryMapButton />
         </TouchableOpacity>
         <RestaurantBottomSheet restaurants={fakeRestaurantData} />
