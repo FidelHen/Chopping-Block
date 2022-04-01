@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import GroupLanding from '../../../assets/svgs/GroupLandingSVG';
+import GroupLandingSVG from '../../../assets/svgs/GroupLandingSVG';
 import { Button } from '@ant-design/react-native';
 
 const GroupLanding = ({ navigation }) => {
@@ -11,7 +11,7 @@ const GroupLanding = ({ navigation }) => {
       <SafeAreaProvider>
         <StatusBar />
         <View style={styles.image_container}>
-          <GroupLanding />
+          <GroupLandingSVG />
         </View>
 
         <View style={styles.title}>
