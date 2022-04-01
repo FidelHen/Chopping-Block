@@ -8,8 +8,8 @@ import ResetPassword from './src/screens/auth/ResetPassword';
 import Cravings from './src/screens/main/Cravings';
 import Home from './src/screens/main/Home';
 import Settings from './src/screens/main/Settings';
-import groupLanding from './src/screens/main/groupLanding';
-import groupInvite from './src/screens/main/groupInvite';
+import GroupLanding from './src/screens/main/GroupLanding';
+import GroupInvite from './src/screens/main/GroupInvite';
 
 
 const Stack = createNativeStackNavigator();
@@ -25,8 +25,8 @@ export default function App() {
         <Stack.Screen name="Cravings" component={Cravings} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="groupLanding" component={groupLanding} />
-        <Stack.Screen name="groupInvite" component={groupInvite} />
+        <Stack.Screen name="GroupLanding" component={GroupLanding} />
+        <Stack.Screen name="GroupInvite" component={GroupInvite} />
       </Stack.Navigator>
     </NavigationContainer>
   );
