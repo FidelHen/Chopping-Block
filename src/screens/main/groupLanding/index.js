@@ -5,7 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import GroupLanding from '../../../assets/svgs/GroupLandingSVG';
 import { Button } from '@ant-design/react-native';
 
-const GroupsLanding = ({ navigation }) => {
+const GroupLanding = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaProvider>
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default GroupsLanding
+export default GroupLanding
