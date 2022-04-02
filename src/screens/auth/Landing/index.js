@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TacoSVG from '../../../assets/svgs/tacoSVG';
 import { Button } from '@ant-design/react-native';
@@ -11,10 +11,10 @@ const Landing = ({ navigation }) => {
       <SafeAreaProvider>
         <StatusBar />
         <View style={styles.title}>
-          <Text style={{ fontSize: 49, letterSpacing: 0, opacity: 1 }}>
+          <Text style={{ fontSize: Platform.OS == "ios" ? 49 : 42, letterSpacing: 0, opacity: 1 }}>
             Chopping
           </Text>
-          <Text style={{ fontSize: 49, letterSpacing: 0, opacity: 1 }}>
+          <Text style={{ fontSize: Platform.OS == "ios" ? 49 : 42, letterSpacing: 0, opacity: 1 }}>
             Block
           </Text>
         </View>
@@ -22,10 +22,10 @@ const Landing = ({ navigation }) => {
           <TacoSVG />
         </View>
         <View style={styles.image_text}>
-          <Text style={{ fontSize: 27, fontWeight: "bold", letterSpacing: 0, opacity: 1 }}>
+          <Text style={{ fontSize: Platform.OS == "ios" ? 27 : 24, fontWeight: "bold", letterSpacing: 0, opacity: 1 }}>
             Welcome to Chopping Block!
           </Text>
-          <Text style={{ fontSize: 20, paddingLeft: "12.5%", paddingRight: "12.5%", textAlign: "center", letterSpacing: 0, opacity: 1 }}>
+          <Text style={{ fontSize: Platform.OS == "ios" ? 20 : 18, paddingLeft: "12.5%", paddingRight: "12.5%", textAlign: "center", letterSpacing: 0, opacity: 1 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec felis placerat, vulputate nisi quis.
           </Text>
         </View>

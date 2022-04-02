@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import { Button } from '@ant-design/react-native';
@@ -41,7 +41,7 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={{ flex: 0.4, flexDirection: 'row', alignContent: 'center', justifyContent: 'flex-start', marginLeft: '7%' }}>
-            <Text style={{ fontSize: 39, fontWeight: 'bold' }}>
+            <Text style={{ fontSize: Platform.OS == "ios" ? 44 : 39, fontWeight: 'bold' }}>
               Welcome back!
             </Text>
           </View>
@@ -56,7 +56,7 @@ const Login = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.2, alignContent: 'center' }}>
             <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => signInUser(email, password)}>
-              <Text style={{ fontSize: 18, fontWeight: "600" }}>
+              <Text style={{ fontSize: Platform.OS == "ios" ? 18 : 14, fontWeight: "700" }}>
                 Sign In
               </Text>
             </Button>
