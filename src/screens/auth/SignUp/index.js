@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Dimensions, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from '@ant-design/react-native';
 import { auth } from '../../../firebase/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -37,7 +36,7 @@ const SignUp = ({ navigation }) => {
         <StatusBar />
         <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
           <View style={{ flex: 0.15, marginLeft: '5%' }}>
-            <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
+            <TouchableOpacity style={{width: '10%'}} onPress={() => navigation.navigate("Landing")}>
               <AntDesign name='left' size={28} color="#000000" />
             </TouchableOpacity>
           </View>
