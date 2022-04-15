@@ -42,7 +42,7 @@ const SignUp = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.5, flexDirection: 'row', alignContent: 'center', justifyContent: 'flex-start', marginLeft: '7%' }}>
             <Text style={{ fontSize: Platform.OS == "ios" ? 39 : 34, fontWeight: 'bold' }}>
-              Create an account
+              Create Account
             </Text>
           </View>
           <View>

@@ -7,7 +7,7 @@ const GroupInvite = ({ navigation }) => {
     <View style={{ flex: 1, flexDirection: 'column', alignContent: 'center', justifyContent: 'center' }}>
       <View style={styles.title}>
         <Text style={{ fontSize: 40, letterSpacing: 0, opacity: 1 }}>
-          Who's all
+          Who's 
         </Text>
         <Text style={{ fontSize: 40, letterSpacing: 0, opacity: 1, }}>
           coming?
@@ -18,7 +18,7 @@ const GroupInvite = ({ navigation }) => {
           <View style={styles.container2}>
             <View style={{ flex: .2, justifyContent: "space-evenly" }}>
               <Text style={{ fontSize: 15, letterSpacing: 0, opacity: 1, left: 14 }}>
-                Friend Email
+                Friend's Email
               </Text>
               <TextInput style={styles.input} />
             </View>

@@ -21,9 +21,7 @@ const GroupLanding = ({ navigation }) => {
 
           <Text style={{ flex: .87, fontSize: 15, textAlign: "center", letterSpacing: 0, opacity: 1, marginLeft: '7%', marginRight: '7%' }}>
             No worries, let's put it up to a
-            vote! Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Nam nec
-            felis placerat, vulputate nisi quis.
+            vote!
           </Text>
         </View>
 
@@ -35,7 +33,7 @@ const GroupLanding = ({ navigation }) => {
           </Button>
           <TouchableOpacity>
             <Text style={{ fontSize: 18, fontWeight: "600", textAlign: "center" }}>
-              Join with code
+              Join With Code
             </Text>
           </TouchableOpacity>
         </View>

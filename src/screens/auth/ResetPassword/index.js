@@ -14,11 +14,11 @@ const ResetPassword = ({ navigation }) => {
 
   function sendResetEmail(e) {
     sendPasswordResetEmail(auth, e).then(function() {
-      alert("Password Reset Email was sent")
+      alert("Password reset email was sent")
       navigation.navigate("Landing")
     })
     .catch(function(error) {
-      alert("Error! Password Reset Email was not sent")
+      alert("Error! Password reset email was not sent")
     });
   }
 

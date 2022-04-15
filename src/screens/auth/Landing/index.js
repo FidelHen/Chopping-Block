@@ -23,10 +23,10 @@ const Landing = ({ navigation }) => {
         </View>
         <View style={styles.image_text}>
           <Text style={{ fontSize: Platform.OS == "ios" ? 27 : 24, fontWeight: "bold", letterSpacing: 0, opacity: 1 }}>
-            Welcome to Chopping Block!
+            You're on the Chopping Block!
           </Text>
           <Text style={{ fontSize: Platform.OS == "ios" ? 20 : 18, paddingLeft: "12.5%", paddingRight: "12.5%", textAlign: "center", letterSpacing: 0, opacity: 1 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec felis placerat, vulputate nisi quis.
+            Don't know where to eat? We're here to help.
           </Text>
         </View>
         <View style={styles.buttons}>
