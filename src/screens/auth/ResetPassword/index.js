@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {
-  StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput
-} from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AntDesign } from '@expo/vector-icons';
 import { Button } from '@ant-design/react-native';
 import { auth } from '../../../firebase/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -13,27 +12,32 @@ const ResetPassword = ({ navigation }) => {
   const [email, setEmail] = useState();
 
   function sendResetEmail(e) {
-    sendPasswordResetEmail(auth, e).then(function() {
+    sendPasswordResetEmail(auth, e).then(function () {
       alert("Password reset email was sent")
       navigation.navigate("Landing")
     })
-    .catch(function(error) {
-      alert("Error! Password reset email was not sent")
-    });
+      .catch(function (error) {
+        alert("Error! Password reset email was not sent")
+      });
   }
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <SafeAreaProvider>
         <StatusBar />
+        <View style={{ flex: 0.40, marginLeft: '5%', justifyContent: 'center' }}>
+          <TouchableOpacity style={{ width: '10%' }} onPress={() => navigation.navigate("Settings")}>
+            <AntDesign name='left' size={28} color="#000000" />
+          </TouchableOpacity>
+        </View>
         <View style={{ flex: 0.8, alignContent: 'center', justifyContent: 'flex-end' }}>
           <View style={{ flex: 0.2, flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 24 }}>
               Reset Password
             </Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Text style={{fontSize: 20}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <Text style={{ fontSize: 20 }}>
               Please enter email for password reset
             </Text>
           </View>
