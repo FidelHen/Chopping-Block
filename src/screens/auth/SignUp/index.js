@@ -6,6 +6,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { Button } from '@ant-design/react-native';
 import { auth } from '../../../firebase/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { db } from '../../../firebase/firebase';
+import { setDoc, doc } from "firebase/firestore";
 
 const SignUp = ({ navigation }) => {
 
@@ -17,9 +19,20 @@ const SignUp = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, email, password).then(() => {
       updateProfile(auth.currentUser, {
         displayName: fullName
-      }).then(userCredentials => {
+      }).then(async () => {
         alert("Sign Up Successful")
-        navigation.navigate('Cravings');
+        try {
+          const docRef = doc(db, "users", auth.currentUser?.uid) 
+          await setDoc( docRef, {
+            full_name: fullName,
+            email: email
+          });
+          console.log("Document written with ID: ", auth.currentUser?.uid);
+          alert("User Added To Database")
+          navigation.navigate('Cravings');
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
       }).catch(error => {
         alert("Setting displayName error");
         alert(error.messages);
@@ -36,7 +49,7 @@ const SignUp = ({ navigation }) => {
         <StatusBar />
         <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
           <View style={{ flex: 0.15, marginLeft: '5%' }}>
-            <TouchableOpacity style={{width: '10%'}} onPress={() => navigation.navigate("Landing")}>
+            <TouchableOpacity style={{ width: '10%' }} onPress={() => navigation.navigate("Landing")}>
               <AntDesign name='left' size={28} color="#000000" />
             </TouchableOpacity>
           </View>
