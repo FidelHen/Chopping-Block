@@ -9,6 +9,9 @@ import Cravings from "./src/screens/main/Cravings";
 import Home from "./src/screens/main/Home";
 import Settings from "./src/screens/main/Settings";
 import Group from "./src/screens/main/Group";
+import EditName from "./src/screens/main/EditName";
+import Favorites from "./src/screens/main/Favorites";
+import RecentGroups from "./src/screens/main/RecentGroups";
 import GroupInvite from "./src/screens/main/Group/GroupInvite";
 import "react-native-gesture-handler";
 
