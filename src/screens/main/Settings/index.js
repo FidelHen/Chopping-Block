@@ -66,7 +66,7 @@ const Settings = ({ navigation }) => {
               Recent Groups
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Favorites")}>
             <Text style={{ fontSize: 20, textAlign: "center", letterSpacing: 0, opacity: 1 }}>
               Favorites
             </Text>
