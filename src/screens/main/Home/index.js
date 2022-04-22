@@ -1,27 +1,33 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { StyleSheet, Dimensions, View, TouchableOpacity, Text } from 'react-native';
-import { SvgUri } from 'react-native-svg';
-import { StatusBar } from 'expo-status-bar';
-import { mapStyleDark } from './mapStyle';
-import * as Location from 'expo-location';
-import BottomSheet from '@gorhom/bottom-sheet';
-import RestaurantBottomSheet from '../../../components/RestaurantBottomSheet';
-import PrimaryMapButton from '../../../components/PrimaryMapButton';
-import fakeRestaurantData from '../../../utils/fakeRestuarantData';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { auth } from '../../../firebase/firebase';
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  TouchableOpacity,
+  Text,
+} from "react-native";
+import { SvgUri } from "react-native-svg";
+import { StatusBar } from "expo-status-bar";
+import { mapStyleDark } from "./mapStyle";
+import * as Location from "expo-location";
+import BottomSheet from "@gorhom/bottom-sheet";
+import RestaurantBottomSheet from "../../../components/RestaurantBottomSheet";
+import PrimaryMapButton from "../../../components/PrimaryMapButton";
+import fakeRestaurantData from "../../../utils/fakeRestuarantData";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { auth } from "../../../firebase/firebase";
 
 const Home = ({ navigation }) => {
   const bottomSheetRef = useRef(null);
   const [location, setLocation] = useState(null);
-  const snapPoints = useMemo(() => ['25%', '65%'], []);
+  const snapPoints = useMemo(() => ["25%", "65%"], []);
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Location permission not granted');
+      if (status !== "granted") {
+        console.log("Location permission not granted");
         return;
       }
 
@@ -29,11 +35,11 @@ const Home = ({ navigation }) => {
       console.log(JSON.stringify(location));
       setLocation(location);
     })();
-  }, [])
+  }, []);
 
   return (
     <View>
-      <StatusBar style='light' />
+      <StatusBar style="light" />
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -47,8 +53,15 @@ const Home = ({ navigation }) => {
       >
         <SafeAreaView>
           <View style={styles.profileButtonContainer}>
-            <TouchableOpacity style={styles.profileButton} onPress={() => navigation.navigate("Settings")}>
-              <SvgUri uri='https://avatars.dicebear.com/api/bottts/:choppingblock.svg' width="80%" height="80%" />
+            <TouchableOpacity
+              style={styles.profileButton}
+              onPress={() => navigation.navigate("Settings")}
+            >
+              <SvgUri
+                uri="https://avatars.dicebear.com/api/bottts/:choppingblock.svg"
+                width="80%"
+                height="80%"
+              />
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -56,30 +69,31 @@ const Home = ({ navigation }) => {
           return (
             <Marker
               key={index}
-              coordinate={{ latitude: restaurant.latitude, longitude: restaurant.longitude }}
+              coordinate={{
+                latitude: restaurant.latitude,
+                longitude: restaurant.longitude,
+              }}
               title={restaurant.name}
             />
           );
         })}
-        <Marker
-          coordinate={location ? location.coords : {}}
-        >
+        <Marker coordinate={location ? location.coords : {}}>
           <View style={styles.userLocationMarker} />
         </Marker>
       </MapView>
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={1}
-        snapPoints={snapPoints}
-      >
-        <TouchableOpacity onPress={() => {navigation.navigate('GroupLanding')}}>
+      <BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Group");
+          }}
+        >
           <PrimaryMapButton />
         </TouchableOpacity>
         <RestaurantBottomSheet restaurants={fakeRestaurantData} />
       </BottomSheet>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -88,39 +102,39 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
   userLocationMarker: {
     width: 20,
     height: 20,
     borderRadius: 20,
     borderWidth: 3,
-    borderColor: 'white',
-    backgroundColor: '#4053FA',
+    borderColor: "white",
+    backgroundColor: "#4053FA",
   },
   mapOverlayComponents: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    display: 'flex',
+    display: "flex",
   },
   profileButton: {
     height: 40,
     width: 40,
     borderRadius: 20,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '5%',
-    marginTop: '10%'
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: "5%",
+    marginTop: "10%",
   },
   profileButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  }
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
 });
 
 export default Home;
