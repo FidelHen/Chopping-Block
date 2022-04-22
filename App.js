@@ -10,6 +10,7 @@ import Home from './src/screens/main/Home';
 import Settings from './src/screens/main/Settings';
 import GroupLanding from './src/screens/main/GroupLanding';
 import GroupInvite from './src/screens/main/GroupInvite';
+import EditName from './src/screens/main/EditName';
 import Favorites from './src/screens/main/Favorites';
 import 'react-native-gesture-handler';
 
@@ -28,6 +29,7 @@ export default function App() {
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="GroupLanding" component={GroupLanding} />
         <Stack.Screen name="GroupInvite" component={GroupInvite} />
+        <Stack.Screen name="EditName" component={EditName} />
         <Stack.Screen name="Favorites" component={Favorites} />
       </Stack.Navigator>
     </NavigationContainer>
