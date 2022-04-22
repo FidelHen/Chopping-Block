@@ -82,7 +82,7 @@ const Settings = ({ navigation }) => {
               Edit Name
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("RecentGroups")}>
             <Text style={{ fontSize: 20, textAlign: "center", letterSpacing: 0, opacity: 1 }}>
               Recent Groups
             </Text>
