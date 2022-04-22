@@ -6,6 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { auth } from '../../../firebase/firebase';
 import fakeRestaurantData from '../../../utils/fakeRestuarantData';
 import { Card } from '@ant-design/react-native';
+import RestaurantSimplified from '../../../components/RestaurantCardSimplified';
+import CardDivider from '../../../components/RestaurantCardSimplified/CardDivider';
 
 const Favorites = ({ navigation }) => {
     function viewRestaurant(restaurant) {
@@ -28,20 +30,28 @@ const Favorites = ({ navigation }) => {
                 </Text>
             </View>
 
-            <View style={styles.image_text}>
-            {fakeRestaurantData.map((restaurant, index) => {
-                return (
-                    <TouchableOpacity onPress={() => viewRestaurant(restaurant)}>
-                        <Card>
-                            <Card.Header
-                                title={restaurant.name}
-                                thumbStyle={{ width: 30, height: 30 }}
-                                thumb={restaurant.image}
-                            />
-                        </Card>
-                    </TouchableOpacity>
-                );
-            })}
+            <View style={styles.container}>
+                <Card style={styles.card}>
+                    <Card.Header
+                        style={styles.cardHeader}
+                        title={<Text style={styles.cardTitle}>🌯 Top 3 picks</Text>}
+                    />
+                    <Card.Body style={styles.cardBody}>
+                    {fakeRestaurantData.map((restaurant, index) => {
+                        return (
+                            <TouchableOpacity onPress={() => viewRestaurant(restaurant)}>
+                                <View key={restaurant.name}>
+                                    <RestaurantSimplified
+                                    key={index}
+                                    restaurant={restaurant}
+                                    />
+                                    {index !== fakeRestaurantData.length - 1 && <CardDivider />}
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    })}
+                    </Card.Body>
+                </Card>
             </View>
         </SafeAreaProvider>
         </SafeAreaView >
