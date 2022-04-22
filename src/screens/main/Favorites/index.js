@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { auth } from '../../../firebase/firebase';
@@ -8,6 +8,8 @@ import fakeRestaurantData from '../../../utils/fakeRestuarantData';
 import { Card } from '@ant-design/react-native';
 import RestaurantSimplified from '../../../components/RestaurantCardSimplified';
 import CardDivider from '../../../components/RestaurantCardSimplified/CardDivider';
+
+const { width } = Dimensions.get("window");
 
 const Favorites = ({ navigation }) => {
     function viewRestaurant(restaurant) {
@@ -32,10 +34,6 @@ const Favorites = ({ navigation }) => {
 
             <View style={styles.container}>
                 <Card style={styles.card}>
-                    <Card.Header
-                        style={styles.cardHeader}
-                        title={<Text style={styles.cardTitle}>🌯 Top 3 picks</Text>}
-                    />
                     <Card.Body style={styles.cardBody}>
                     {fakeRestaurantData.map((restaurant, index) => {
                         return (
