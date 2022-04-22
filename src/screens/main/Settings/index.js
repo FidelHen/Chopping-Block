@@ -1,12 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ProfilePic from '../../../assets/svgs/profilePicSVG';
 import { auth } from '../../../firebase/firebase';
+import { db } from '../../../firebase/firebase';
+import { getDoc, doc } from 'firebase/firestore';
 
 const Settings = ({ navigation }) => {
+
+  const [userName, setUserName] = useState("Test");
+  const [userEmail, setUserEmail] = useState("Test");
+
+
+  useEffect(() => {
+    (async () => {
+      const docRef = doc(db, "users", auth.currentUser?.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setUserName(docSnap.data()["full_name"])
+        setUserEmail(docSnap.data()["email"])
+      }
+      else {
+        console.log("No data")
+      }
+    })();
+  }, [])
 
   const handleSignOut = () => {
     auth.signOut().then(() => {
@@ -40,12 +61,12 @@ const Settings = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.2 }}>
             <Text style={{ fontSize: 25, letterSpacing: 0, opacity: 1 }}>
-              Name: {auth.currentUser?.displayName}
+              Name: {userName}
             </Text>
           </View>
           <View style={{ flex: 0.4 }}>
             <Text>
-              Email: {auth.currentUser?.email}
+              Email: {userEmail}
             </Text>
           </View>
         </View>
@@ -56,7 +77,7 @@ const Settings = ({ navigation }) => {
               Account Setting
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("EditName")}>
             <Text style={{ fontSize: 20, textAlign: "center", letterSpacing: 0, opacity: 1 }}>
               Edit Name
             </Text>
@@ -71,7 +92,7 @@ const Settings = ({ navigation }) => {
               Favorites
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
             <Text style={{ fontSize: 20, textAlign: "center", letterSpacing: 0, opacity: 1 }}>
               Reset Password
             </Text>
