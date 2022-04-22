@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TacoSVG from '../../../assets/svgs/tacoSVG';
+import LogoSVG from '../../../assets/svgs/logoSVG';
 import { Button } from '@ant-design/react-native';
 
 const Landing = ({ navigation }) => {
@@ -19,7 +19,7 @@ const Landing = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.image_container}>
-          <TacoSVG />
+          <LogoSVG />
         </View>
         <View style={styles.image_text}>
           <Text style={{ fontSize: Platform.OS == "ios" ? 27 : 24, fontWeight: "bold", letterSpacing: 0, opacity: 1 }}>
