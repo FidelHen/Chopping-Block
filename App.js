@@ -10,7 +10,7 @@ import Home from './src/screens/main/Home';
 import Settings from './src/screens/main/Settings';
 import GroupLanding from './src/screens/main/GroupLanding';
 import GroupInvite from './src/screens/main/GroupInvite';
-
+import 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator();
 
