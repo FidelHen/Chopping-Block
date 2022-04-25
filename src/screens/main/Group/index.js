@@ -10,12 +10,18 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import GroupLandingSVG from "../../../assets/svgs/GroupLandingSVG";
 import { Button } from "@ant-design/react-native";
+import { AntDesign } from '@expo/vector-icons';
 
 const Group = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaProvider>
         <StatusBar />
+        <View style={{ flex: 0.15, marginLeft: '5%', justifyContent: 'center' }}>
+          <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+            <AntDesign name='left' size={28} color="#000000" />
+          </TouchableOpacity>
+        </View>
         <View style={styles.image_container}>
           <GroupLandingSVG />
         </View>
