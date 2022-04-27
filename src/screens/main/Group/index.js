@@ -17,8 +17,8 @@ const Group = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <SafeAreaProvider>
         <StatusBar />
-        <View style={{ flex: 0.15, marginLeft: '5%', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+        <View style={{ flex: 0.20, marginLeft: '5%', justifyContent: 'center' }}>
+          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
             <AntDesign name='left' size={28} color="#000000" />
           </TouchableOpacity>
         </View>
@@ -54,7 +54,7 @@ const Group = ({ navigation }) => {
           </Text>
         </View>
 
-        <View>
+        <View style={{ flex: 0.25 }}>
           <Button
             type="primary"
             style={{
