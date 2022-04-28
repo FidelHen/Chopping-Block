@@ -18,8 +18,8 @@ import fakeRestaurantData from "../../../utils/fakeRestuarantData";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../../firebase/firebase";
 import { db } from "../../../firebase/firebase";
-import { getDoc, doc } from 'firebase/firestore';
-import LoadingScreen from "../../../components/LoadingScreen"
+import { getDoc, doc } from "firebase/firestore";
+import LoadingScreen from "../../../components/LoadingScreen";
 
 const Home = ({ navigation }) => {
   const bottomSheetRef = useRef(null);
@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(JSON.stringify(location));
+      console.log(location);
       setLocation(location);
       grabInitialRecommendations(location);
       setIsLoading(false);
@@ -54,42 +54,41 @@ const Home = ({ navigation }) => {
   if (!locationGranted) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>
-          Please navigate to settings and allow location
-        </Text>
+        <Text>Please navigate to settings and allow location</Text>
       </View>
     );
   }
 
   async function grabInitialRecommendations(loc) {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer YZcky4x_RQQBWsAQyIv6_8f9yOFMghMIxPKZ0qRRQ8uQEYSfTGm7P0TY4REvwbHId-MiOmxlk7Jc-EAazkEG4ZfRBriaK8IPfrp8BcaDcjr9QTd_XLEPvHd8wroGYnYx");
+    myHeaders.append(
+      "Authorization",
+      "Bearer YZcky4x_RQQBWsAQyIv6_8f9yOFMghMIxPKZ0qRRQ8uQEYSfTGm7P0TY4REvwbHId-MiOmxlk7Jc-EAazkEG4ZfRBriaK8IPfrp8BcaDcjr9QTd_XLEPvHd8wroGYnYx"
+    );
 
     var requestOptions = {
-      method: 'GET',
+      method: "GET",
       headers: myHeaders,
-      redirect: 'follow'
+      redirect: "follow",
     };
     const docRef = doc(db, "users", auth.currentUser?.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      userPerferences = docSnap.data()["perferences"]
-      console.log(`https://api.yelp.com/v3/businesses/search?categories=${userPerferences}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`)
+      userPerferences = docSnap.data()["perferences"];
+    } else {
+      console.log("No data");
     }
-    else {
-      console.log("No data")
-    }
-    let currData = []
-    await fetch(`https://api.yelp.com/v3/businesses/search?categories=${userPerferences}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        console.log("----------------------------")
-        console.log(result)
-        console.log("----------------------------")
-        data = JSON.parse(result)
+
+    let currData = [];
+    await fetch(
+      `https://api.yelp.com/v3/businesses/search?categories=${userPerferences}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        data = JSON.parse(result);
         for (let i = 0; i < 3; i++) {
-          let tempData = data["businesses"][i]
+          let tempData = data["businesses"][i];
           let tempDictionary = {
             id: i + 1,
             uid: tempData["id"],
@@ -101,19 +100,15 @@ const Home = ({ navigation }) => {
             image: tempData["image_url"],
             cuisine: "Not implemented",
             latitude: tempData["coordinates"]["latitude"],
-            longitude: tempData["coordinates"]["longitude"]
-          }
-          currData.push(tempDictionary)
+            longitude: tempData["coordinates"]["longitude"],
+          };
+          currData.push(tempDictionary);
         }
-        console.log("CURRDATA:")
-        console.log(currData)
-        setRestaurantData(currData)
+        setRestaurantData(currData);
       })
-      .catch(error => console.log('error', error));
-    console.log("Complete")
-    console.log(restaurantData)
+      .catch((error) => console.log("error", error));
   }
-  
+
   return (
     <View>
       <StatusBar style="light" />
@@ -122,8 +117,8 @@ const Home = ({ navigation }) => {
         style={styles.map}
         customMapStyle={mapStyleDark}
         region={{
-          latitude: 35.2270869,
-          longitude: -80.8431267,
+          latitude: location ? location.coords.latitude : 35.2270869,
+          longitude: location ? location.coords.longitude : -80.8431267,
           latitudeDelta: 0.8,
           longitudeDelta: 0.0121,
         }}
@@ -143,9 +138,6 @@ const Home = ({ navigation }) => {
           </View>
         </SafeAreaView>
         {restaurantData.map((restaurant, index) => {
-          console.log("******************************")
-          console.log(restaurant)
-          console.log("******************************")
           return (
             <Marker
               key={index}

@@ -1,13 +1,24 @@
-import React from 'react';
-import { StyleSheet, Dimensions, View, Text } from 'react-native';
-import { Card } from '@ant-design/react-native';
-import RestaurantSimplified from '../RestaurantCardSimplified';
-import CardDivider from '../RestaurantCardSimplified/CardDivider';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Dimensions, View, Text } from "react-native";
+import { Card } from "@ant-design/react-native";
+import RestaurantSimplified from "../RestaurantCardSimplified";
+import CardDivider from "../RestaurantCardSimplified/CardDivider";
+import { ActivityIndicator } from "@ant-design/react-native";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width - 20;
 
 const RestaurantBottomSheet = ({ restaurants }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (restaurants.length === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [restaurants]);
+
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -15,23 +26,26 @@ const RestaurantBottomSheet = ({ restaurants }) => {
           style={styles.cardHeader}
           title={<Text style={styles.cardTitle}>🌯 Top 3 picks</Text>}
         />
-        <Card.Body style={styles.cardBody}>
-          {restaurants.map((restaurant, index) => {
-            return (
-              <View key={restaurant.name}>
-                <RestaurantSimplified
-                  key={index}
-                  restaurant={restaurant}
-                />
-                {index !== restaurants.length - 1 && <CardDivider />}
-              </View>
-            );
-          })}
-        </Card.Body>
+        {isLoading ? (
+          <View style={styles.activityIndicatorContainer}>
+            <ActivityIndicator size="small" color="#4053FA" />
+          </View>
+        ) : (
+          <Card.Body style={styles.cardBody}>
+            {restaurants.map((restaurant, index) => {
+              return (
+                <View key={restaurant.name}>
+                  <RestaurantSimplified key={index} restaurant={restaurant} />
+                  {index !== restaurants.length - 1 && <CardDivider />}
+                </View>
+              );
+            })}
+          </Card.Body>
+        )}
       </Card>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +57,7 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     borderWidth: 0,
     borderRadius: 8,
+    display: "flex",
   },
   cardHeader: {
     marginTop: 15,
@@ -52,8 +67,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  activityIndicatorContainer: {
+    height: 100,
+    justifyContent: "center",
+  },
   cardBody: {
-    borderColor: 'transparent'
+    borderColor: "transparent",
   },
 });
 
