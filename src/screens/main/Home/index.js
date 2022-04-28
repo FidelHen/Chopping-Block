@@ -17,26 +17,103 @@ import PrimaryMapButton from "../../../components/PrimaryMapButton";
 import fakeRestaurantData from "../../../utils/fakeRestuarantData";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../../firebase/firebase";
+import { db } from "../../../firebase/firebase";
+import { getDoc, doc } from 'firebase/firestore';
+import LoadingScreen from "../../../components/LoadingScreen"
 
 const Home = ({ navigation }) => {
   const bottomSheetRef = useRef(null);
   const [location, setLocation] = useState(null);
   const snapPoints = useMemo(() => ["25%", "65%"], []);
+  const [isLoading, setIsLoading] = useState(true);
+  const [locationGranted, setLocationGranted] = useState(true);
+  const [restaurantData, setRestaurantData] = useState([]);
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.log("Location permission not granted");
+        setIsLoading(false);
+        setLocationGranted(false);
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
       console.log(JSON.stringify(location));
       setLocation(location);
+      grabInitialRecommendations(location);
+      setIsLoading(false);
     })();
   }, []);
 
+  if (isLoading) {
+    return <LoadingScreen title="Loading..." />;
+  }
+
+  if (!locationGranted) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>
+          Please navigate to settings and allow location
+        </Text>
+      </View>
+    );
+  }
+
+  async function grabInitialRecommendations(loc) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer YZcky4x_RQQBWsAQyIv6_8f9yOFMghMIxPKZ0qRRQ8uQEYSfTGm7P0TY4REvwbHId-MiOmxlk7Jc-EAazkEG4ZfRBriaK8IPfrp8BcaDcjr9QTd_XLEPvHd8wroGYnYx");
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    const docRef = doc(db, "users", auth.currentUser?.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      userPerferences = docSnap.data()["perferences"]
+      console.log(`https://api.yelp.com/v3/businesses/search?categories=${userPerferences}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`)
+    }
+    else {
+      console.log("No data")
+    }
+    let currData = []
+    await fetch(`https://api.yelp.com/v3/businesses/search?categories=${userPerferences}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log("----------------------------")
+        console.log(result)
+        console.log("----------------------------")
+        data = JSON.parse(result)
+        for (let i = 0; i < 3; i++) {
+          let tempData = data["businesses"][i]
+          let tempDictionary = {
+            id: i + 1,
+            uid: tempData["id"],
+            name: tempData["name"],
+            address: tempData["location"]["address1"],
+            services: "Dine-in · Takeout",
+            rating: tempData["rating"],
+            reviews: tempData["review_count"],
+            image: tempData["image_url"],
+            cuisine: "Not implemented",
+            latitude: tempData["coordinates"]["latitude"],
+            longitude: tempData["coordinates"]["longitude"]
+          }
+          currData.push(tempDictionary)
+        }
+        console.log("CURRDATA:")
+        console.log(currData)
+        setRestaurantData(currData)
+      })
+      .catch(error => console.log('error', error));
+    console.log("Complete")
+    console.log(restaurantData)
+  }
+  
   return (
     <View>
       <StatusBar style="light" />
@@ -65,7 +142,10 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </SafeAreaView>
-        {fakeRestaurantData.map((restaurant, index) => {
+        {restaurantData.map((restaurant, index) => {
+          console.log("******************************")
+          console.log(restaurant)
+          console.log("******************************")
           return (
             <Marker
               key={index}
@@ -90,7 +170,7 @@ const Home = ({ navigation }) => {
         >
           <PrimaryMapButton />
         </TouchableOpacity>
-        <RestaurantBottomSheet restaurants={fakeRestaurantData} />
+        <RestaurantBottomSheet restaurants={restaurantData} />
       </BottomSheet>
     </View>
   );
