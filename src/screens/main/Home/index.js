@@ -24,7 +24,9 @@ import LoadingScreen from "../../../components/LoadingScreen";
 const Home = ({ navigation }) => {
   const bottomSheetRef = useRef(null);
   const [location, setLocation] = useState(null);
-  const snapPoints = useMemo(() => ["25%", "65%"], []);
+  const windowHeight = Dimensions.get('window').height;
+  const percentage = Math.round((500 / windowHeight) * 100)
+  const snapPoints = useMemo(() => ["25%", `${percentage}%`], []);
   const [isLoading, setIsLoading] = useState(true);
   const [locationGranted, setLocationGranted] = useState(true);
   const [restaurantData, setRestaurantData] = useState([]);
@@ -74,14 +76,16 @@ const Home = ({ navigation }) => {
     const docRef = doc(db, "users", auth.currentUser?.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      userPerferences = docSnap.data()["perferences"];
+      randomUserPerference = docSnap.data()["perferences"][Math.floor(Math.random() * (docSnap.data()["perferences"].length - 1))];
     } else {
       console.log("No data");
     }
 
+    console.log(`https://api.yelp.com/v3/businesses/search?categories=${randomUserPerference}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`)
+
     let currData = [];
     await fetch(
-      `https://api.yelp.com/v3/businesses/search?categories=${userPerferences}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`,
+      `https://api.yelp.com/v3/businesses/search?categories=${randomUserPerference}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`,
       requestOptions
     )
       .then((response) => response.text())
