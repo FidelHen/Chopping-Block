@@ -105,6 +105,7 @@ const Home = ({ navigation }) => {
             cuisine: "Not implemented",
             latitude: tempData["coordinates"]["latitude"],
             longitude: tempData["coordinates"]["longitude"],
+            url: tempData["url"]
           };
           currData.push(tempDictionary);
         }
