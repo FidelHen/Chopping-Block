@@ -13,6 +13,7 @@ import EditName from "./src/screens/main/EditName";
 import Favorites from "./src/screens/main/Favorites";
 import RecentGroups from "./src/screens/main/RecentGroups";
 import GroupInvite from "./src/screens/main/Group/GroupInvite";
+import JoinWithCode from "./src/screens/main/Group/JoinWithCode";
 import "react-native-gesture-handler";
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ export default function App() {
         <Stack.Screen name="EditName" component={EditName} />
         <Stack.Screen name="Favorites" component={Favorites} />
         <Stack.Screen name="RecentGroups" component={RecentGroups} />
+        <Stack.Screen name="JoinWithCode" component={JoinWithCode} />
       </Stack.Navigator>
     </NavigationContainer>
   );

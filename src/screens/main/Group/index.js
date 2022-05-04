@@ -70,7 +70,7 @@ const Group = ({ navigation }) => {
               Create Group
             </Text>
           </Button>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("JoinWithCode")}>
             <Text
               style={{ fontSize: 18, fontWeight: "600", textAlign: "center" }}
             >
