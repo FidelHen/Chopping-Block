@@ -13,9 +13,18 @@ import { Button } from "@ant-design/react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { SvgUri } from "react-native-svg";
 import LoadingScreen from "../../../../components/LoadingScreen";
+import { auth, db } from "../../../../firebase/firebase";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDoc,
+  writeBatch,
+} from "firebase/firestore";
 
 const GroupInvite = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isGeneratingCode, setisGeneratingCode] = useState(true);
+  const [isCreatingGroup, setIsCreatingGroup] = useState(false);
   const dummyData = [
     {
       name: "Peter Glover",
@@ -29,12 +38,69 @@ const GroupInvite = ({ navigation }) => {
   ];
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    handleCreateGroup();
   }, []);
 
-  if (isLoading) {
+  const handleCreateGroup = async () => {
+    setisGeneratingCode(true);
+
+    const currentUserDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+
+    const groupDocRef = doc(collection(db, "groups"));
+    const groupMetadataDocRef = doc(db, "groups", "metadata");
+    const groupMetadata = await getDoc(groupMetadataDocRef);
+    const batch = writeBatch(db);
+    let roomCode = Math.floor(1000 + Math.random() * 9000);
+
+    if (!groupMetadata.exists()) {
+      batch.set(groupMetadataDocRef, {
+        codes: [roomCode],
+      });
+    } else {
+      const existingGroupCodes = groupMetadata.data().codes;
+      console.log(existingGroupCodes);
+      let roomCodeIsUnique = false;
+      while (!roomCodeIsUnique) {
+        console.log("executing");
+
+        const newRoomCode = Math.floor(10000 + Math.random() * 90000);
+        roomCode = newRoomCode;
+        roomCodeIsUnique = existingGroupCodes.includes(newRoomCode);
+      }
+      console.log(roomCode);
+      batch.set(
+        groupMetadataDocRef,
+        {
+          codes: arrayUnion(roomCode),
+        },
+        { merge: true }
+      );
+    }
+
+    batch.set(groupDocRef, {
+      group_code: roomCode,
+      participants: [
+        {
+          name: currentUserDoc.data().full_name,
+          uid: auth.currentUser.uid,
+          perferences: currentUserDoc.data().perferences,
+        },
+      ],
+      reccomendations: [],
+    });
+
+    await batch.commit().catch((error) => {
+      console.log(error);
+    });
+    console.log("Group created");
+    setisGeneratingCode(false);
+  };
+
+  if (isGeneratingCode) {
+    return <LoadingScreen title="Generating code..." />;
+  }
+
+  if (isCreatingGroup) {
     return <LoadingScreen title="Creating group..." />;
   }
 
@@ -105,7 +171,9 @@ const GroupInvite = ({ navigation }) => {
               backgroundColor: "#4053FA",
               borderColor: "white",
             }}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => {
+              setIsCreatingGroup(true);
+            }}
           >
             <Text
               style={{

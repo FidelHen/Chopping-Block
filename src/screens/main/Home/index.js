@@ -24,8 +24,8 @@ import LoadingScreen from "../../../components/LoadingScreen";
 const Home = ({ navigation }) => {
   const bottomSheetRef = useRef(null);
   const [location, setLocation] = useState(null);
-  const windowHeight = Dimensions.get('window').height;
-  const percentage = Math.round((500 / windowHeight) * 100)
+  const windowHeight = Dimensions.get("window").height;
+  const percentage = Math.round((500 / windowHeight) * 100);
   const snapPoints = useMemo(() => ["25%", `${percentage}%`], []);
   const [isLoading, setIsLoading] = useState(true);
   const [locationGranted, setLocationGranted] = useState(true);
@@ -42,7 +42,6 @@ const Home = ({ navigation }) => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
       setLocation(location);
       grabInitialRecommendations(location);
       setIsLoading(false);
@@ -76,12 +75,13 @@ const Home = ({ navigation }) => {
     const docRef = doc(db, "users", auth.currentUser?.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      randomUserPerference = docSnap.data()["perferences"][Math.floor(Math.random() * (docSnap.data()["perferences"].length - 1))];
+      randomUserPerference =
+        docSnap.data()["perferences"][
+          Math.floor(Math.random() * (docSnap.data()["perferences"].length - 1))
+        ];
     } else {
       console.log("No data");
     }
-
-    console.log(`https://api.yelp.com/v3/businesses/search?categories=${randomUserPerference}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`)
 
     let currData = [];
     await fetch(
@@ -105,7 +105,7 @@ const Home = ({ navigation }) => {
             cuisine: "Not implemented",
             latitude: tempData["coordinates"]["latitude"],
             longitude: tempData["coordinates"]["longitude"],
-            url: tempData["url"]
+            url: tempData["url"],
           };
           currData.push(tempDictionary);
         }
