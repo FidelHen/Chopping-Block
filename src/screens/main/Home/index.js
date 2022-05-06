@@ -74,18 +74,21 @@ const Home = ({ navigation }) => {
     };
     const docRef = doc(db, "users", auth.currentUser?.uid);
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
+    let categories;
+    if (docSnap?.data()["perferences"]) {
       randomUserPerference =
         docSnap.data()["perferences"][
           Math.floor(Math.random() * (docSnap.data()["perferences"].length - 1))
-        ];
+        ].replaceAll(' ', '+');
+        categories = `categories=${randomUserPerference}&`;
     } else {
+      categories = "";
       console.log("No data");
     }
 
     let currData = [];
     await fetch(
-      `https://api.yelp.com/v3/businesses/search?categories=${randomUserPerference}&latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`,
+      `https://api.yelp.com/v3/businesses/search?${categories}latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`,
       requestOptions
     )
       .then((response) => response.text())

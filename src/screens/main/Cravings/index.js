@@ -42,7 +42,7 @@ const Cravings = ({ navigation }) => {
             </View>
             <View style={styles.buttons}>
               <Button type="primary" style={{ flex: 0.75, backgroundColor: "#4053FA" }} onPress={() => {
-                const perfArray = perf.split(",").map((value) => value.trim().toLowerCase())
+                const perfArray = perf?.split(",").map((value) => value.trim().toLowerCase())
                 console.log(perfArray)
                 addCravingsToUser(perfArray)
                 navigation.navigate("Home")
