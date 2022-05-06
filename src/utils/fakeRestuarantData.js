@@ -10,6 +10,7 @@ const fakeRestaurantData = [
         cuisine: 'Japanese',
         latitude: 35.215300,
         longitude: -80.781190,
+        url: 'https://www.yelp.com/biz/sosu-charlotte'
     },
     {
         id: 2,
@@ -22,6 +23,7 @@ const fakeRestaurantData = [
         cuisine: 'Italian',
         latitude: 35.152229,
         longitude: -80.831894,
+        url: 'https://www.yelp.com/biz/maggianos-little-italy-charlotte'
     },
     {
         id: 3,
@@ -34,6 +36,7 @@ const fakeRestaurantData = [
         cuisine: 'Mexican',
         latitude: 35.310040,
         longitude: -80.754240,
+        url: 'https://www.yelp.com/biz/los-arcos-charlotte'
     }
 ];
 
