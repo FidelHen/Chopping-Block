@@ -34,5 +34,5 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 // UNCOMMENT TO CONNECT TO FIREBASE EMULATOR
-connectAuthEmulator(auth, "http://localhost:9099");
-connectFirestoreEmulator(db, "localhost", 8080);
+// connectAuthEmulator(auth, "http://localhost:9099");
+// connectFirestoreEmulator(db, "localhost", 8080);
