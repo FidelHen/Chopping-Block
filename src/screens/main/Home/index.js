@@ -90,30 +90,31 @@ const Home = ({ navigation }) => {
 
     let currData = [];
     await fetch(
-      `https://api.yelp.com/v3/businesses/search?${categories}latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}`,
+      `https://api.yelp.com/v3/businesses/search?${categories}latitude=${loc.coords.latitude}&longitude=${loc.coords.longitude}&limit=5`,
       requestOptions
     )
       .then((response) => response.text())
       .then((result) => {
-        data = JSON.parse(result);
-        for (let i = 0; i < 3; i++) {
-          let tempData = data["businesses"][i];
-          let tempDictionary = {
+        let data = JSON.parse(result);
+        data["businesses"]
+        .sort((r1, r2) => r2.rating - r1)
+        .slice(0, 2)
+        .forEach((resData, i) => {
+          currData.push({
             id: i + 1,
-            uid: tempData["id"],
-            name: tempData["name"],
-            address: tempData["location"]["address1"],
+            uid: resData["id"],
+            name: resData["name"],
+            address: resData["location"]["address1"],
             services: "Dine-in · Takeout",
-            rating: tempData["rating"],
-            reviews: tempData["review_count"],
-            image: tempData["image_url"],
+            rating: resData["rating"],
+            reviews: resData["review_count"],
+            image: resData["image_url"],
             cuisine: "Not implemented",
-            latitude: tempData["coordinates"]["latitude"],
-            longitude: tempData["coordinates"]["longitude"],
-            url: tempData["url"],
-          };
-          currData.push(tempDictionary);
-        }
+            latitude: resData["coordinates"]["latitude"],
+            longitude: resData["coordinates"]["longitude"],
+            url: resData["url"],
+          });
+        });
         setRestaurantData(currData);
       })
       .catch((error) => console.log("error", error));
