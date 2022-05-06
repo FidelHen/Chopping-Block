@@ -12,10 +12,35 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "@ant-design/react-native";
 import { AntDesign } from '@expo/vector-icons';
+import { auth, db } from "../../../../firebase/firebase";
+import { getDocs, getDoc, doc, collection, setDoc, query, where, arrayUnion } from "firebase/firestore";
 
 const JoinWithCode = ({ navigation }) => {
 
   const [code, setCode] = useState();
+
+  async function goToGroup(groupCode) {
+    console.log(code)
+    const docRef = doc(db, 'users', auth.currentUser?.uid);
+    const docSnapshot = await getDoc(docRef)
+    console.log(docSnapshot.data())
+    const groupsRef = collection(db, "groups");
+    const q = query(groupsRef, where("group_code", "==", parseInt(groupCode)))
+    const querySnapshot = await getDocs(q)
+    console.log(querySnapshot.empty)
+    let groupUid;
+    querySnapshot.forEach(async (doc) => {
+      groupUid = doc.id;
+      console.log(doc.data()["participants"])
+      await setDoc(doc.ref, {
+        "participants": arrayUnion({"name": "test", "perferences": ["american", "burger"], "uid": "test2"})
+      }, {merge: true}
+    )
+    })
+    
+    navigation.navigate("GroupInvite", { isJoining: true, groupUid: groupUid })
+
+  }
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
@@ -33,7 +58,7 @@ const JoinWithCode = ({ navigation }) => {
         </View>
         <View>
           <TextInput style={styles.input} onChangeText={setCode} value={code} placeholder="Group Code" keyboardType = 'numeric' maxLength={5} />
-          <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => console.log(code)}>
+          <Button type="primary" style={{ height: 40, margin: 12, borderWidth: 1, padding: 10, backgroundColor: "#4053FA" }} onPress={() => goToGroup(code)}>
             <Text style={{ fontSize: Platform.OS == "ios" ? 18 : 14, fontWeight: "700" }}>
               Join Group
             </Text>
