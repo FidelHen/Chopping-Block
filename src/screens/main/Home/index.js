@@ -167,7 +167,8 @@ const Home = ({ navigation }) => {
                     { text: "Yes",
                       onPress: () => { 
                         await docRef.update("favorites", FieldValue.arrayUnion(restaurant))
-                        .then(() => { Alert.alert("Restaurant added to favorites") }); 
+                        .then(() => { Alert.alert("Restaurant added to favorites") })
+                        .catch((err) => {console.log(err)}); 
                       }
                     }
                   ]
