@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Dimensions, Share } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { auth } from '../../../firebase/firebase';
@@ -9,14 +9,23 @@ import { Card } from '@ant-design/react-native';
 import RestaurantSimplified from '../../../components/RestaurantCardSimplified';
 import CardDivider from '../../../components/RestaurantCardSimplified/CardDivider';
 import { Share } from 'react-native-feather';
-import { auth } from "../../../firebase/firebase";
 import { db } from "../../../firebase/firebase";
 import { getDoc, doc } from "firebase/firestore";
 
 const Favorites = ({ navigation }) => {
-    const docRef = doc(db, "users", auth.currentUser?.uid);
-    const docSnap = await getDoc(docRef);
-    const restaurantData = docSnap?.data()["favorites"] ? docSnap.data()["favorites"] : fakeRestaurantData;
+
+    const [restaurantData, setRestaurantData] = useState([]);
+
+    useEffect(() => {
+        grabFavoritesData();
+    }, [])
+    
+    async function grabFavoritesData() {
+        const docRef = doc(db, "users", auth.currentUser?.uid);
+        const docSnap = await getDoc(docRef);
+        const rd = docSnap?.data()["favorites"] ? docSnap.data()["favorites"] : fakeRestaurantData;
+        setRestaurantData(rd)
+    }
 
     function shareRestaurant(restaurant) {
         Share.share({ url: restaurant.url });

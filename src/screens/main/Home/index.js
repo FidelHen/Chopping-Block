@@ -19,7 +19,7 @@ import fakeRestaurantData from "../../../utils/fakeRestuarantData";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../../firebase/firebase";
 import { db } from "../../../firebase/firebase";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, arrayUnion, setDoc } from "firebase/firestore";
 import LoadingScreen from "../../../components/LoadingScreen";
 
 const Home = ({ navigation }) => {
@@ -166,7 +166,8 @@ const Home = ({ navigation }) => {
                     },
                     { text: "Yes",
                       onPress: async () => { 
-                        await docRef.update("favorites", FieldValue.arrayUnion(restaurant))
+                        const docRef = doc(db, "users", auth.currentUser?.uid);
+                        await setDoc(docRef, {"favorites": arrayUnion(restaurant)}, {merge: true})
                         .then(() => { Alert.alert("Restaurant added to favorites") })
                         .catch((err) => {console.log(err)}); 
                       }
