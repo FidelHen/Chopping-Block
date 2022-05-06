@@ -1,5 +1,3 @@
-# Untitled
-
 # Chopping Block
 
 An app that helps you make decisions on where to eat.
