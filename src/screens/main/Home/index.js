@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Alert,
 } from "react-native";
 import { SvgUri } from "react-native-svg";
 import { StatusBar } from "expo-status-bar";
@@ -154,6 +155,24 @@ const Home = ({ navigation }) => {
                 longitude: restaurant.longitude,
               }}
               title={restaurant.name}
+              onPress={() => { 
+                Alert.alert(
+                  restaurant.name,
+                  "Add to favorites?",
+                  [
+                    {
+                      text: "No",
+                      style: "cancel"
+                    },
+                    { text: "Yes",
+                      onPress: () => { 
+                        await docRef.update("favorites", FieldValue.arrayUnion(restaurant))
+                        .then(() => { Alert.alert("Restaurant added to favorites") }); 
+                      }
+                    }
+                  ]
+                );
+               }}
             />
           );
         })}
