@@ -165,7 +165,7 @@ const Home = ({ navigation }) => {
                       style: "cancel"
                     },
                     { text: "Yes",
-                      onPress: () => { 
+                      onPress: async () => { 
                         await docRef.update("favorites", FieldValue.arrayUnion(restaurant))
                         .then(() => { Alert.alert("Restaurant added to favorites") })
                         .catch((err) => {console.log(err)}); 
