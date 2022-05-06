@@ -23,19 +23,12 @@ import {
 } from "firebase/firestore";
 
 const GroupInvite = ({ navigation }) => {
+  const [groupData, setGroupData] = useState({
+    group_code: null,
+    participants: [],
+    group_uid: null,
+  });
   const [isGeneratingCode, setisGeneratingCode] = useState(true);
-  const [isCreatingGroup, setIsCreatingGroup] = useState(false);
-  const dummyData = [
-    {
-      name: "Peter Glover",
-    },
-    {
-      name: "James Williams",
-    },
-    {
-      name: "Brian Gonzales",
-    },
-  ];
 
   useEffect(() => {
     handleCreateGroup();
@@ -45,39 +38,13 @@ const GroupInvite = ({ navigation }) => {
     setisGeneratingCode(true);
 
     const currentUserDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-
     const groupDocRef = doc(collection(db, "groups"));
-    const groupMetadataDocRef = doc(db, "groups", "metadata");
-    const groupMetadata = await getDoc(groupMetadataDocRef);
     const batch = writeBatch(db);
+
     let roomCode = Math.floor(1000 + Math.random() * 9000);
+    console.log(roomCode);
 
-    if (!groupMetadata.exists()) {
-      batch.set(groupMetadataDocRef, {
-        codes: [roomCode],
-      });
-    } else {
-      const existingGroupCodes = groupMetadata.data().codes;
-      console.log(existingGroupCodes);
-      let roomCodeIsUnique = false;
-      while (!roomCodeIsUnique) {
-        console.log("executing");
-
-        const newRoomCode = Math.floor(10000 + Math.random() * 90000);
-        roomCode = newRoomCode;
-        roomCodeIsUnique = existingGroupCodes.includes(newRoomCode);
-      }
-      console.log(roomCode);
-      batch.set(
-        groupMetadataDocRef,
-        {
-          codes: arrayUnion(roomCode),
-        },
-        { merge: true }
-      );
-    }
-
-    batch.set(groupDocRef, {
+    const groupData = {
       group_code: roomCode,
       participants: [
         {
@@ -86,22 +53,29 @@ const GroupInvite = ({ navigation }) => {
           perferences: currentUserDoc.data().perferences,
         },
       ],
+      group_uid: groupDocRef.id,
       reccomendations: [],
-    });
+    };
+
+    batch.set(groupDocRef, groupData);
+    batch.set(
+      currentUserDoc.ref,
+      {
+        joined_groups: arrayUnion(groupDocRef.id),
+      },
+      { merge: true }
+    );
 
     await batch.commit().catch((error) => {
       console.log(error);
     });
     console.log("Group created");
+    setGroupData(groupData);
     setisGeneratingCode(false);
   };
 
   if (isGeneratingCode) {
     return <LoadingScreen title="Generating code..." />;
-  }
-
-  if (isCreatingGroup) {
-    return <LoadingScreen title="Creating group..." />;
   }
 
   return (
@@ -132,30 +106,23 @@ const GroupInvite = ({ navigation }) => {
             flexDirection: "row",
           }}
         >
+          <TouchableOpacity></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <AntDesign name="left" size={28} color="white" />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.leaveButton}>Leave</Text>
+            <Text style={styles.leaveButton}>Leave group</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Group code</Text>
-          <Text style={styles.title}>1234</Text>
+          <Text style={styles.title}>{groupData.group_code}</Text>
         </View>
         <ScrollView style={styles.scrollViewContainer}>
-          {dummyData.map((item, index) => {
-            //TODO: Error when rendering profile image
-            const profileImage = `https://avatars.dicebear.com/api/bottts/:${item.name}.svg`;
-
+          {groupData.participants.map((item) => {
             return (
-              <Card style={styles.profileCardContainer}>
+              <Card
+                style={styles.profileCardContainer}
+                key={`profileCard${item.name}`}
+              >
                 <View style={styles.profileCard}>
-                  {/* <SvgUri
-                    style={styles.profileImage}
-                    uri={profileImage ?? ""}
-                  /> */}
                   <Text style={styles.profileName}>{item.name}</Text>
                   <AntDesign name="check" size={25} color="#52C41A" />
                 </View>
@@ -172,7 +139,9 @@ const GroupInvite = ({ navigation }) => {
               borderColor: "white",
             }}
             onPress={() => {
-              setIsCreatingGroup(true);
+              navigation.navigate("GroupVote", {
+                ...groupData,
+              });
             }}
           >
             <Text
@@ -183,7 +152,7 @@ const GroupInvite = ({ navigation }) => {
                 margin: 12,
               }}
             >
-              Next
+              Get recommendations
             </Text>
           </Button>
         </View>
@@ -203,7 +172,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   leaveButton: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
     color: "white",
   },

@@ -12,6 +12,7 @@
     "@ant-design/icons-react-native": "^2.3.2",
     "@ant-design/react-native": "^4.2.0",
     "@apollo/client": "^3.4.16",
+    "@expo/ngrok": "^2.4.3",
     "@gorhom/bottom-sheet": "^4.1.5",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-navigation/native": "^6.0.8",

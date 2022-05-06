@@ -1,8 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, getDocs} from 'firebase/firestore'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  connectAuthEmulator,
+} from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  connectFirestoreEmulator,
+} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,10 +24,14 @@ const firebaseConfig = {
   storageBucket: "chopping-block-e1464.appspot.com",
   messagingSenderId: "545276594877",
   appId: "1:545276594877:web:60434bd2a7d45fd78b45d4",
-  measurementId: "G-TNHMV49BV3"
+  measurementId: "G-TNHMV49BV3",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+connectAuthEmulator(auth, "http://localhost:9099");
+connectFirestoreEmulator(db, "localhost", 8080);
