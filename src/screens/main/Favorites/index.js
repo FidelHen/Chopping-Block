@@ -9,10 +9,15 @@ import { Card } from '@ant-design/react-native';
 import RestaurantSimplified from '../../../components/RestaurantCardSimplified';
 import CardDivider from '../../../components/RestaurantCardSimplified/CardDivider';
 import { Share } from 'react-native-feather';
-
-const { width } = Dimensions.get("window");
+import { auth } from "../../../firebase/firebase";
+import { db } from "../../../firebase/firebase";
+import { getDoc, doc } from "firebase/firestore";
 
 const Favorites = ({ navigation }) => {
+    const docRef = doc(db, "users", auth.currentUser?.uid);
+    const docSnap = await getDoc(docRef);
+    const restaurantData = docSnap?.data()["favorites"] ? docSnap.data()["favorites"] : fakeRestaurantData;
+
     function shareRestaurant(restaurant) {
         Share.share({ url: restaurant.url });
     }
@@ -36,7 +41,7 @@ const Favorites = ({ navigation }) => {
             <View style={styles.container}>
                 <Card style={styles.card}>
                     <Card.Body style={styles.cardBody}>
-                    {fakeRestaurantData.map((restaurant, index) => {
+                    {restaurantData.map((restaurant, index) => {
                         return (
                             <TouchableOpacity onPress={() => shareRestaurant(restaurant)}>
                                 <View key={restaurant.name}>
@@ -44,7 +49,7 @@ const Favorites = ({ navigation }) => {
                                     key={index}
                                     restaurant={restaurant}
                                     />
-                                    {index !== fakeRestaurantData.length - 1 && <CardDivider />}
+                                    {index !== restaurantData.length - 1 && <CardDivider />}
                                 </View>
                             </TouchableOpacity>
                         );
