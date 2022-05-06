@@ -77,11 +77,12 @@ const Home = ({ navigation }) => {
     const docSnap = await getDoc(docRef);
     let categories;
     if (docSnap?.data()["perferences"]) {
-      randomUserPerference =
-        docSnap.data()["perferences"][
+      randomUserPerference = docSnap
+        .data()
+        ["perferences"][
           Math.floor(Math.random() * (docSnap.data()["perferences"].length - 1))
-        ].replaceAll(' ', '+');
-        categories = `categories=${randomUserPerference}&`;
+        ].replaceAll(" ", "+");
+      categories = `categories=${randomUserPerference}&`;
     } else {
       categories = "";
       console.log("No data");
@@ -191,7 +192,10 @@ const Home = ({ navigation }) => {
         >
           <PrimaryMapButton />
         </TouchableOpacity>
-        <RestaurantBottomSheet restaurants={restaurantData} />
+        <RestaurantBottomSheet
+          restaurants={restaurantData}
+          navigation={navigation}
+        />
       </BottomSheet>
     </View>
   );

@@ -4,11 +4,12 @@ import { Card } from "@ant-design/react-native";
 import RestaurantSimplified from "../RestaurantCardSimplified";
 import CardDivider from "../RestaurantCardSimplified/CardDivider";
 import { ActivityIndicator } from "@ant-design/react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width - 20;
 
-const RestaurantBottomSheet = ({ restaurants }) => {
+const RestaurantBottomSheet = ({ restaurants, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -34,10 +35,18 @@ const RestaurantBottomSheet = ({ restaurants }) => {
           <Card.Body style={styles.cardBody}>
             {restaurants.map((restaurant, index) => {
               return (
-                <View key={restaurant.name}>
-                  <RestaurantSimplified key={index} restaurant={restaurant} />
-                  {index !== restaurants.length - 1 && <CardDivider />}
-                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("ViewRestaurant", {
+                      restaurantUrl: restaurant.url,
+                    });
+                  }}
+                >
+                  <View key={restaurant.name}>
+                    <RestaurantSimplified key={index} restaurant={restaurant} />
+                    {index !== restaurants.length - 1 && <CardDivider />}
+                  </View>
+                </TouchableOpacity>
               );
             })}
           </Card.Body>

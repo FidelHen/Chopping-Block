@@ -16,6 +16,7 @@ import GroupInvite from "./src/screens/main/Group/GroupInvite";
 import JoinWithCode from "./src/screens/main/Group/JoinWithCode";
 import "react-native-gesture-handler";
 import GroupVote from "./src/screens/main/Group/GroupVote";
+import ViewRestaurant from "./src/screens/main/ViewRestaurant";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="Cravings" component={Cravings} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="ViewRestaurant" component={ViewRestaurant} />
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="Group" component={Group} />
         <Stack.Screen name="GroupInvite" component={GroupInvite} />

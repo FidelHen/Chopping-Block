@@ -11,7 +11,7 @@ import { StatusBar } from "expo-status-bar";
 import { Card } from "@ant-design/react-native";
 import { Button } from "@ant-design/react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { SvgUri } from "react-native-svg";
+import * as Location from "expo-location";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import { auth, db } from "../../../../firebase/firebase";
 import {
@@ -44,6 +44,8 @@ const GroupInvite = ({ navigation }) => {
     let roomCode = Math.floor(1000 + Math.random() * 9000);
     console.log(roomCode);
 
+    let location = await Location.getCurrentPositionAsync({});
+
     const groupData = {
       group_code: roomCode,
       participants: [
@@ -51,6 +53,7 @@ const GroupInvite = ({ navigation }) => {
           name: currentUserDoc.data().full_name,
           uid: auth.currentUser.uid,
           perferences: currentUserDoc.data().perferences,
+          location: location,
         },
       ],
       group_uid: groupDocRef.id,
