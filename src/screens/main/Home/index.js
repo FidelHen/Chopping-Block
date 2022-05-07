@@ -98,7 +98,7 @@ const Home = ({ navigation }) => {
         let data = JSON.parse(result);
         data["businesses"]
         .sort((r1, r2) => r2.rating - r1)
-        .slice(0, 2)
+        .slice(0, 3)
         .forEach((resData, i) => {
           currData.push({
             id: i + 1,
