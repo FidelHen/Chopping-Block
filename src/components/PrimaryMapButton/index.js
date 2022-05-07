@@ -11,7 +11,7 @@ const PrimaryMapButton = () => {
       <View style={styles.card}>
         <View>
           <Text style={styles.header}>🎉 Eating with a group?</Text>
-          <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sollicitudin nisi id mauris.</Text>
+          <Text style={styles.description}>Make your own Block Party or join an existing Block Party with a code!</Text>
         </View>
         <View style={styles.chevronContainer}>
           <ChevronRight size={24} color="white" />
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     color: 'white',
+    marginRight: 14
   },
   chevronContainer: {
     display: "flex",
