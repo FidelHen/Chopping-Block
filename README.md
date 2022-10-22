@@ -20,6 +20,9 @@ An app that helps you make decisions on where to eat.
 - 🌮 Yelp Api
 - 📍 Google Maps
 
+## Mockup
+![UI Mockup of Chopping Block](https://i.imgur.com/boSEAIT.png)
+
 ## Getting started
 
 1. Make sure you have [Node](https://nodejs.org/en/download/) installed
